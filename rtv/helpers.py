@@ -3,6 +3,7 @@ import os
 import curses
 import webbrowser
 import subprocess
+import re
 from datetime import datetime
 from tempfile import NamedTemporaryFile
 
@@ -117,10 +118,14 @@ def open_browser(url):
         display = False
 
     if display:
-        command = "import webbrowser; webbrowser.open_new_tab('%s')" % url
-        args = [sys.executable, '-c', command]
-        with open(os.devnull, 'ab+', 0) as null:
-            subprocess.check_call(args, stdout=null, stderr=null)
+        is_image = bool (re.match(r'(https?:\/\/.*\.(?:png|jpg|gif|mp4|mpg|mpeg|wav|mp3|ogg|txt))', url))
+        if is_image:
+            os.system('sh qli %s &> /dev/null' % url)
+        else:
+            command = "import webbrowser; webbrowser.open_new_tab('%s')" % url
+            args = [sys.executable, '-c', command]
+            with open(os.devnull, 'ab+', 0) as null:
+                subprocess.check_call(args, stdout=null, stderr=null)
     else:
         curses.endwin()
         webbrowser.open_new_tab(url)
