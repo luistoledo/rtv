@@ -1,0 +1,8 @@
+cd ~/Downloads
+url=$1
+extension=${url##*.}
+filename=$(md5 <<< "$url")
+if [ ! -f $filename.$extension ] ; then
+  curl "$url" -o "$filename.$extension"
+fi
+qlmanage -d 0 -p "$filename.$extension"
