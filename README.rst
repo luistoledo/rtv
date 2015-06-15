@@ -64,6 +64,7 @@ Basic Commands
 :``j``/``k`` or ``▲``/``▼``: Move the cursor up/down
 :``m``/``n`` or ``PgUp``/``PgDn``: Jump to the previous/next page
 :``o`` or ``ENTER``: Open the selected item as a webpage
+:``p`` or ``SPACE``: Open image (or other media) on a preview app (ex. quick look)
 :``r`` or ``F5``: Refresh page content
 :``u``: Log in or switch accounts
 :``?``: Show the help screen
@@ -94,6 +95,7 @@ In subreddit mode you can browse through the top submissions on either the front
 :``l`` or ``►``: Enter the selected submission
 :``/``: Open a prompt to switch subreddits
 :``f``: Open a prompt to search the current subreddit
+:``p`` or ``SPACE``: Open image (or other media) on a preview app (ex. quick look)
 
 The ``/`` prompt accepts subreddits in the following formats
    
@@ -110,7 +112,7 @@ Submission Mode
 In submission mode you can view the self text for a submission and browse comments.
 
 :``h`` or ``◄``: Return to the subreddit
-:``SPACE``: Fold the selected comment, or load additional comments
+:``l`` or ``►``:  Fold the selected comment, or load additional comments
 
 =============
 Configuration

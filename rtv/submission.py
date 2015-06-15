@@ -7,7 +7,7 @@ import praw.errors
 
 from .content import SubmissionContent
 from .page import BasePage, Navigator, BaseController
-from .helpers import open_browser, open_editor
+from .helpers import open_browser, open_editor, open_in_preview
 from .curses_helpers import (Color, LoadScreen, get_arrow, get_gold, add_line,
                              show_notification, text_input)
 from .docs import COMMENT_FILE
@@ -45,7 +45,7 @@ class SubmissionPage(BasePage):
             cmd = self.stdscr.getch()
             self.controller.trigger(cmd)
 
-    @SubmissionController.register(curses.KEY_RIGHT, 'l', ' ')
+    @SubmissionController.register(curses.KEY_RIGHT, 'l')
     def toggle_comment(self):
         "Toggle the selected comment tree between visible and hidden"
 
@@ -81,6 +81,17 @@ class SubmissionPage(BasePage):
         url = data.get('permalink')
         if url:
             open_browser(url)
+        else:
+            curses.flash()
+
+    @SubmissionController.register(' ')
+    def preview_media(self):
+        "Preview current submission on OS preview software"
+
+        data = self.content.get(self.nav.absolute_index)
+        url = data.get('permalink')
+        if url:
+            open_in_preview(self, url)
         else:
             curses.flash()
 

@@ -32,6 +32,7 @@ Basic Commands
   `j/k` or `UP/DOWN`  : Move the cursor up/down
   `m/n` or `PgUp/PgDn`: Jump to the previous/next page
   `o` or `ENTER`      : Open the selected item as a webpage
+  `p` or `SPACE`      : Preview the selected image (quicklook)
   `r` or `F5`         : Refresh page content
   `u`                 : Log in or switch accounts
   `?`                 : Show the help screen
@@ -50,7 +51,7 @@ Subreddit Mode
 
 Submission Mode
   `h` or `LEFT`       : Return to subreddit mode
-  `SPACE`             : Fold the selected comment, or load additional comments
+  `l` or `RIGHT`      : Fold the selected comment, or load additional comments
 """
 
 COMMENT_FILE = u"""

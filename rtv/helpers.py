@@ -14,7 +14,7 @@ import six
 from . import config
 from .exceptions import ProgramError
 
-__all__ = ['open_browser', 'clean', 'wrap_text', 'strip_textpad',
+__all__ = ['open_browser', 'clean', 'wrap_text', 'strip_textpad', 'open_in_preview'
            'strip_subreddit_url', 'humanize_timestamp', 'open_editor']
 
 
@@ -118,19 +118,32 @@ def open_browser(url):
         display = False
 
     if display:
-        is_image = bool (re.match(r'(https?:\/\/.*\.(?:png|jpg|gif|mp4|mpg|mpeg|wav|mp3|ogg|txt))', url))
-        if is_image:
-            os.system('sh qli %s &> /dev/null' % url)
-        else:
-            command = "import webbrowser; webbrowser.open_new_tab('%s')" % url
-            args = [sys.executable, '-c', command]
-            with open(os.devnull, 'ab+', 0) as null:
-                subprocess.check_call(args, stdout=null, stderr=null)
+        command = "import webbrowser; webbrowser.open_new_tab('%s')" % url
+        args = [sys.executable, '-c', command]
+        with open(os.devnull, 'ab+', 0) as null:
+            subprocess.check_call(args, stdout=null, stderr=null)
     else:
         curses.endwin()
         webbrowser.open_new_tab(url)
         curses.doupdate()
 
+def open_in_preview(self, url):
+    "Preview in osx's quick look or linux's gloobus (theoretically)"
+    is_previewevable = False
+
+    # Preprocess url from known sites (need more work)
+    url = url + '.jpg'  if bool(re.match(r'.*imgur\.com.*', url)) else  url
+    url = url[:-5] + '.gif'  if bool(re.match(r'.*\.gifv', url)) else  url
+    url = 'http://giant.' + url[7:] + '.webm'  if bool(re.match(r'.*gfycat\.com.*', url)) else  url
+    
+    is_previewevable = bool (re.match(r'(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|tiff|webm|mov|avi|mp4|mpg|mpeg|wav|mp3|ogg|midi|txt|pdf))', url))
+
+    if is_previewevable:
+        # this qli bash script download the resource and calls qlmanage (osx quick look)
+        # looking for ways to manage the download inside this program, show a downloading alert, ...
+        os.system('sh qli %s &> /dev/null' % url)
+    else:
+        curses.flash()
 
 def wrap_text(text, width):
     """

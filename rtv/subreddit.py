@@ -10,7 +10,7 @@ from .exceptions import SubredditError, AccountError
 from .page import BasePage, Navigator, BaseController
 from .submission import SubmissionPage
 from .content import SubredditContent
-from .helpers import open_browser, open_editor
+from .helpers import open_browser, open_editor, open_in_preview
 from .docs import SUBMISSION_FILE
 from .history import load_history, save_history
 from .curses_helpers import (Color, LoadScreen, add_line, get_arrow, get_gold,
@@ -110,6 +110,16 @@ class SubredditPage(BasePage):
 
         url = self.content.get(self.nav.absolute_index)['url_full']
         open_browser(url)
+
+        global history
+        history.add(url)
+
+    @SubredditController.register(' ')
+    def preview_media(self):
+        "Preview link on OS preview software"
+
+        url = self.content.get(self.nav.absolute_index)['url_full']
+        open_in_preview(self, url)
 
         global history
         history.add(url)

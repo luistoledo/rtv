@@ -9,7 +9,7 @@ import praw.errors
 import requests
 from kitchen.text.display import textual_width
 
-from .helpers import open_editor
+from .helpers import open_editor, open_editor, open_in_preview
 from .curses_helpers import (Color, show_notification, show_help, text_input,
                              prompt_input, add_line)
 from .docs import COMMENT_EDIT_FILE, SUBMISSION_FILE
